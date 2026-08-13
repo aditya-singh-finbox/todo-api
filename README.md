@@ -56,18 +56,7 @@ A simple Go REST API for managing todos, built with Gin and GORM.
    go run ./cmd/server
    ```
 
-## Default Configuration
 
-The app reads the following environment variables:
-
-```env
-PORT=8080
-DB_HOST=localhost
-DB_PORT=5433
-DB_USER=postgres
-DB_PASSWORD=postgres
-DB_NAME=todo
-```
 
 ## API Endpoints
 
