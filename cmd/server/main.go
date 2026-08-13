@@ -6,6 +6,7 @@ import (
 	"github.com/aditya-singh-finbox/todo-api/config"
 	"github.com/aditya-singh-finbox/todo-api/internal/database"
 	"github.com/aditya-singh-finbox/todo-api/internal/handler"
+	"github.com/aditya-singh-finbox/todo-api/internal/model"
 	"github.com/aditya-singh-finbox/todo-api/internal/repository"
 	"github.com/aditya-singh-finbox/todo-api/internal/routes"
 	"github.com/aditya-singh-finbox/todo-api/internal/service"
@@ -18,6 +19,13 @@ func main() {
 	err := database.Connect(cfg)
 	if err != nil {
 		log.Fatalf("Error connecting to the database: %v", err)
+	}
+	database.Connect(cfg)
+
+	db := database.GetDB()
+
+	if err := db.AutoMigrate(&model.Todo{}); err != nil {
+		log.Fatal(err)
 	}
 	todoRepository := repository.NewTodoRepository()
 	todoService := service.NewTodoService(todoRepository)
