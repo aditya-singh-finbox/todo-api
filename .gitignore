@@ -1,0 +1,16 @@
+.env
+.env.local
+.env.*
+!.env.example
+
+# OS / editor files
+.DS_Store
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Build artifacts
+bin/
+tmp/

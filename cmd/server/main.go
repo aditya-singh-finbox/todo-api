@@ -1,0 +1,32 @@
+package main
+
+import (
+	"log"
+
+	"github.com/aditya-singh-finbox/todo-api/config"
+	"github.com/aditya-singh-finbox/todo-api/internal/database"
+	"github.com/aditya-singh-finbox/todo-api/internal/handler"
+	"github.com/aditya-singh-finbox/todo-api/internal/repository"
+	"github.com/aditya-singh-finbox/todo-api/internal/routes"
+	"github.com/aditya-singh-finbox/todo-api/internal/service"
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+	cfg := config.LoadConfig()
+
+	err := database.Connect(cfg)
+	if err != nil {
+		log.Fatalf("Error connecting to the database: %v", err)
+	}
+	todoRepository := repository.NewTodoRepository()
+	todoService := service.NewTodoService(todoRepository)
+	todoHandler := handler.NewTodoHandler(todoService)
+
+	router := gin.Default()
+	routes.SetupRoutes(router, todoHandler)
+	log.Printf("Starting server on port %s", cfg.Port)
+	if err := router.Run(":" + cfg.Port); err != nil {
+		log.Fatalf("Error starting server: %v", err)
+	}
+}
