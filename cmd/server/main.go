@@ -24,7 +24,10 @@ func main() {
 
 	db := database.GetDB()
 
-	if err := db.AutoMigrate(&model.Todo{}); err != nil {
+	if err := db.AutoMigrate(
+		&model.User{},
+		&model.Todo{},
+	); err != nil {
 		log.Fatal(err)
 	}
 	todoRepository := repository.NewTodoRepository()
