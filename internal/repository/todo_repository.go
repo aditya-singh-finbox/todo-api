@@ -17,15 +17,15 @@ func NewTodoRepository() *TodoRepository {
 func (r *TodoRepository) Create(todo *model.Todo) error {
 	return r.db.Create(todo).Error
 }
-func (r *TodoRepository) GetAll() ([]model.Todo, error) {
+func (r *TodoRepository) GetAllByuserID(userID uint) ([]model.Todo, error) {
 	var todos []model.Todo
-	err := r.db.Find(&todos).Error
+	err := r.db.Where("user_id=?", userID).Find(&todos).Error
 	return todos, err
 }
 
-func (r *TodoRepository) GetByID(id uint) (*model.Todo, error) {
+func (r *TodoRepository) GetByID(userID uint, todoID uint) (*model.Todo, error) {
 	var todo model.Todo
-	err := r.db.First(&todo, id).Error
+	err := r.db.Where("id =? AND user_id =?", todoID, userID).First(&todo).Error
 	if err != nil {
 		return nil, err
 	}
@@ -33,9 +33,9 @@ func (r *TodoRepository) GetByID(id uint) (*model.Todo, error) {
 }
 
 func (r *TodoRepository) Update(todo *model.Todo) error {
-	return r.db.Save(todo).Error
+	return r.db.Model(&model.Todo{}).Where("id = ? AND user_id = ?", todo.ID, todo.UserID).Updates(todo).Error
 }
 
-func (r *TodoRepository) Delete(id uint) error {
-	return r.db.Delete(&model.Todo{}, id).Error
+func (r *TodoRepository) Delete(userId uint, todoID uint) error {
+	return r.db.Where("id = ? AND user_id = ?", todoID, userId).Delete(&model.Todo{}).Error
 }

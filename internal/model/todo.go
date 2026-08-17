@@ -7,7 +7,7 @@ type Todo struct {
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
 	Completed   bool      `json:"completed"`
-	UserID      uint      `json:"user_id"`
+	UserID      uint      `gorm:"not null" json:"user_id"`
 	User        User      `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"-"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
