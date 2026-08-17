@@ -50,6 +50,7 @@ func main() {
 		router,
 		authHandler,
 		todoHandler,
+		jwtService,
 	)
 	log.Printf("Starting server on port %s", cfg.Port)
 	if err := router.Run(":" + cfg.Port); err != nil {
