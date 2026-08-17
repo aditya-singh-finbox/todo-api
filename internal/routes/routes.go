@@ -5,9 +5,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(router *gin.Engine, todoHandler *handler.TodoHandler) {
+func SetupRoutes(router *gin.Engine, authHandler *handler.AuthHandler, todoHandler *handler.TodoHandler) {
 	api := router.Group("/api")
 	{
+		api.POST("/register", authHandler.Register)
+		api.POST("/login", authHandler.Login)
 		todos := api.Group("/todos")
 		{
 			todos.POST("", todoHandler.Create)

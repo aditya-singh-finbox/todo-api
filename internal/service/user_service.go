@@ -32,13 +32,17 @@ func (s *UserService) Register(user *model.User) error {
 }
 func (s *UserService) Login(email, password string) (*model.User, error) {
 	user, err := s.userRepo.GetByEmail(email)
+	fmt.Printf("Entered Password: '%s'\n", password)
+	fmt.Printf("Length: %d\n", len(password))
 	if err != nil {
-		return nil, fmt.Errorf("invalid email or password")
+		fmt.Println("User not found:", err)
+		return nil, fmt.Errorf("invalid email or password first")
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
-		return nil, fmt.Errorf("invalid email or password")
+		fmt.Println("Password comparison failed:", err)
+		return nil, fmt.Errorf("invalid email or password second")
 	}
 
 	return user, nil
