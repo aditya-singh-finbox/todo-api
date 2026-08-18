@@ -12,6 +12,9 @@ func SetupRoutes(router *gin.Engine, authHandler *handler.AuthHandler, todoHandl
 	{
 		api.POST("/register", authHandler.Register)
 		api.POST("/login", authHandler.Login)
+		api.POST("/refresh", authHandler.Refresh)
+
+		api.POST("/logout", authHandler.Logout)
 		todos := api.Group("/todos")
 		todos.Use(middleware.AuthMiddleware(jwtService))
 		{

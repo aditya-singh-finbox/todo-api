@@ -28,20 +28,28 @@ func main() {
 	if err := db.AutoMigrate(
 		&model.User{},
 		&model.Todo{},
+		model.RefreshToken{},
 	); err != nil {
 		log.Fatal(err)
 	}
 
 	userRepo := repository.NewUserRepository(db)
 	todoRepository := repository.NewTodoRepository()
+	refreshTokenRepo := repository.NewRefreshTokenRepository(db)
 
 	userService := service.NewUserService(userRepo)
 	todoService := service.NewTodoService(todoRepository)
 	jwtService := auth.NewJWTService(cfg.JWTSecret)
 
-	authHandler := handler.NewAuthHandler(
+	authService := service.NewAuthService(
 		userService,
 		jwtService,
+		refreshTokenRepo,
+	)
+
+	authHandler := handler.NewAuthHandler(
+		userService,
+		authService,
 	)
 	todoHandler := handler.NewTodoHandler(todoService)
 
