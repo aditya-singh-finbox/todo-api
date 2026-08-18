@@ -58,7 +58,7 @@ function TodoItem({
         <button
           className="delete-button"
           onClick={() =>
-            onDelete(todo.id)
+            onDelete(todo)
           }
         >
           Delete

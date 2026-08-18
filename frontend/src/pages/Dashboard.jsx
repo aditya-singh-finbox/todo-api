@@ -1,11 +1,14 @@
 import {
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
 import Navbar from "../components/Navbar";
 import TodoForm from "../components/TodoForm";
 import TodoItem from "../components/TodoItem";
+import EditTodoModal from "../components/EditTodoModal";
+import DeleteTodoModal from "../components/DeleteTodoModal";
 
 import {
   getTodos,
@@ -15,9 +18,11 @@ import {
 } from "../api/todoApi";
 
 function Dashboard() {
+  // =========================
+  // Todo State
+  // =========================
 
-  const [todos, setTodos] =
-    useState([]);
+  const [todos, setTodos] = useState([]);
 
   const [loading, setLoading] =
     useState(true);
@@ -25,29 +30,46 @@ function Dashboard() {
   const [error, setError] =
     useState("");
 
-  /*
-   * Load todos
-   */
+  // =========================
+  // Search & Filter State
+  // =========================
+
+  const [search, setSearch] =
+    useState("");
+
+  const [filter, setFilter] =
+    useState("all");
+
+  // =========================
+  // Modal State
+  // =========================
+
+  const [editingTodo, setEditingTodo] =
+    useState(null);
+
+  const [deletingTodo, setDeletingTodo] =
+    useState(null);
+
+  const [deleteLoading, setDeleteLoading] =
+    useState(false);
+
+  // =========================
+  // Load Todos
+  // =========================
 
   useEffect(() => {
     loadTodos();
   }, []);
 
   const loadTodos = async () => {
-
     try {
-
       setLoading(true);
-
       setError("");
 
-      const data =
-        await getTodos();
+      const data = await getTodos();
 
       setTodos(data);
-
     } catch (error) {
-
       console.error(
         "Load todos error:",
         error
@@ -55,25 +77,23 @@ function Dashboard() {
 
       setError(
         error.response?.data?.error ||
-        "Failed to load todos"
+          "Failed to load todos"
       );
-
     } finally {
-
       setLoading(false);
-
     }
   };
 
-  /*
-   * CREATE
-   */
+  // =========================
+  // Create Todo
+  // =========================
 
-  const handleCreateTodo =
-    async ({
-      title,
-      description,
-    }) => {
+  const handleCreateTodo = async ({
+    title,
+    description,
+  }) => {
+    try {
+      setError("");
 
       const newTodo =
         await createTodo(
@@ -87,164 +107,159 @@ function Dashboard() {
           ...currentTodos,
         ]
       );
-    };
+    } catch (error) {
+      console.error(
+        "Create todo error:",
+        error
+      );
 
-  /*
-   * TOGGLE COMPLETED
-   */
+      setError(
+        error.response?.data?.error ||
+          "Failed to create todo"
+      );
 
-  const handleToggle =
-    async (todo) => {
+      throw error;
+    }
+  };
 
-      try {
+  // =========================
+  // Toggle Todo
+  // =========================
 
-        setError("");
+  const handleToggle = async (
+    todo
+  ) => {
+    try {
+      setError("");
 
-        const updatedTodo =
-          await updateTodo(
-            todo.id,
-            {
-              completed:
-                !todo.completed,
-            }
-          );
-
-        setTodos(
-          (currentTodos) =>
-            currentTodos.map(
-              (item) =>
-                item.id ===
-                updatedTodo.id
-                  ? updatedTodo
-                  : item
-            )
+      const updatedTodo =
+        await updateTodo(
+          todo.id,
+          {
+            completed:
+              !todo.completed,
+          }
         );
 
-      } catch (error) {
+      setTodos(
+        (currentTodos) =>
+          currentTodos.map(
+            (item) =>
+              item.id ===
+              updatedTodo.id
+                ? updatedTodo
+                : item
+          )
+      );
+    } catch (error) {
+      console.error(
+        "Toggle todo error:",
+        error
+      );
 
-        console.error(
-          "Toggle todo error:",
-          error
-        );
-
-        setError(
-          error.response?.data?.error ||
+      setError(
+        error.response?.data?.error ||
           "Failed to update todo"
-        );
-      }
-    };
+      );
+    }
+  };
 
-  /*
-   * EDIT
-   */
+  // =========================
+  // Open Edit Modal
+  // =========================
 
-  const handleEdit =
-    async (todo) => {
+  const handleEdit = (todo) => {
+    setEditingTodo(todo);
+  };
 
-      const newTitle =
-        window.prompt(
-          "Enter new title:",
-          todo.title
-        );
+  // =========================
+  // Save Edited Todo
+  // =========================
 
-      if (
-        newTitle === null
-      ) {
-        return;
-      }
+  const handleSaveEdit = async ({
+    title,
+    description,
+  }) => {
+    if (!editingTodo) {
+      return;
+    }
 
-      if (
-        !newTitle.trim()
-      ) {
-        return;
-      }
+    try {
+      setError("");
 
-      const newDescription =
-        window.prompt(
-          "Enter new description:",
-          todo.description ||
-            ""
-        );
-
-      if (
-        newDescription === null
-      ) {
-        return;
-      }
-
-      try {
-
-        setError("");
-
-        const updatedTodo =
-          await updateTodo(
-            todo.id,
-            {
-              title:
-                newTitle.trim(),
-
-              description:
-                newDescription.trim(),
-            }
-          );
-
-        setTodos(
-          (currentTodos) =>
-            currentTodos.map(
-              (item) =>
-                item.id ===
-                updatedTodo.id
-                  ? updatedTodo
-                  : item
-            )
+      const updatedTodo =
+        await updateTodo(
+          editingTodo.id,
+          {
+            title,
+            description,
+          }
         );
 
-      } catch (error) {
+      setTodos(
+        (currentTodos) =>
+          currentTodos.map(
+            (item) =>
+              item.id ===
+              updatedTodo.id
+                ? updatedTodo
+                : item
+          )
+      );
 
-        console.error(
-          "Edit todo error:",
-          error
-        );
+      setEditingTodo(null);
+    } catch (error) {
+      console.error(
+        "Edit todo error:",
+        error
+      );
 
-        setError(
-          error.response?.data?.error ||
-          "Failed to edit todo"
-        );
-      }
-    };
+      setError(
+        error.response?.data?.error ||
+          "Failed to update todo"
+      );
 
-  /*
-   * DELETE
-   */
+      throw error;
+    }
+  };
 
-  const handleDelete =
-    async (id) => {
+  // =========================
+  // Open Delete Modal
+  // =========================
 
-      const confirmed =
-        window.confirm(
-          "Are you sure you want to delete this todo?"
-        );
+  const handleDelete = (todo) => {
+    setDeletingTodo(todo);
+  };
 
-      if (!confirmed) {
+  // =========================
+  // Confirm Delete
+  // =========================
+
+  const handleConfirmDelete =
+    async () => {
+      if (!deletingTodo) {
         return;
       }
 
       try {
-
+        setDeleteLoading(true);
         setError("");
 
-        await deleteTodo(id);
+        await deleteTodo(
+          deletingTodo.id
+        );
 
         setTodos(
           (currentTodos) =>
             currentTodos.filter(
               (todo) =>
-                todo.id !== id
+                todo.id !==
+                deletingTodo.id
             )
         );
 
+        setDeletingTodo(null);
       } catch (error) {
-
         console.error(
           "Delete todo error:",
           error
@@ -252,23 +267,156 @@ function Dashboard() {
 
         setError(
           error.response?.data?.error ||
-          "Failed to delete todo"
+            "Failed to delete todo"
         );
+      } finally {
+        setDeleteLoading(false);
       }
     };
+
+  // =========================
+  // Statistics
+  // =========================
+
+  const totalTodos =
+    todos.length;
+
+  const completedTodos =
+    todos.filter(
+      (todo) => todo.completed
+    ).length;
+
+  const activeTodos =
+    totalTodos -
+    completedTodos;
+
+  // =========================
+  // Search + Filter
+  // =========================
+
+  const filteredTodos =
+    useMemo(() => {
+      return todos.filter(
+        (todo) => {
+          // Filter by status
+
+          if (
+            filter === "active" &&
+            todo.completed
+          ) {
+            return false;
+          }
+
+          if (
+            filter === "completed" &&
+            !todo.completed
+          ) {
+            return false;
+          }
+
+          // Search
+
+          const searchText =
+            search
+              .toLowerCase()
+              .trim();
+
+          if (!searchText) {
+            return true;
+          }
+
+          const title =
+            todo.title
+              ?.toLowerCase() || "";
+
+          const description =
+            todo.description
+              ?.toLowerCase() || "";
+
+          return (
+            title.includes(
+              searchText
+            ) ||
+            description.includes(
+              searchText
+            )
+          );
+        }
+      );
+    }, [todos, filter, search]);
+
+  // =========================
+  // Render
+  // =========================
 
   return (
     <div className="dashboard">
 
+      {/* =========================
+          Navbar
+          ========================= */}
+
       <Navbar />
 
       <main className="dashboard-content">
+
+        {/* =========================
+            Create Todo
+            ========================= */}
 
         <TodoForm
           onTodoCreated={
             handleCreateTodo
           }
         />
+
+        {/* =========================
+            Statistics
+            ========================= */}
+
+        <div className="stats-grid">
+
+          <div className="stat-card">
+
+            <span>
+              Total
+            </span>
+
+            <strong>
+              {totalTodos}
+            </strong>
+
+          </div>
+
+          <div className="stat-card">
+
+            <span>
+              Active
+            </span>
+
+            <strong>
+              {activeTodos}
+            </strong>
+
+          </div>
+
+          <div className="stat-card">
+
+            <span>
+              Completed
+            </span>
+
+            <strong>
+              {completedTodos}
+            </strong>
+
+          </div>
+
+        </div>
+
+        {/* =========================
+            Todo Section
+            ========================= */}
 
         <section className="todos-section">
 
@@ -279,13 +427,86 @@ function Dashboard() {
             </h2>
 
             <span>
-              {todos.length}{" "}
-              {todos.length === 1
+              {filteredTodos.length}{" "}
+              {filteredTodos.length === 1
                 ? "task"
-                : "tasks"}
+                : "tasks"}{" "}
+              shown
             </span>
 
           </div>
+
+          {/* =========================
+              Search + Filters
+              ========================= */}
+
+          <div className="todo-controls">
+
+            <input
+              type="text"
+              value={search}
+              onChange={(e) =>
+                setSearch(
+                  e.target.value
+                )
+              }
+              placeholder="Search todos..."
+              className="search-input"
+            />
+
+            <div className="filters">
+
+              <button
+                className={
+                  filter === "all"
+                    ? "filter-active"
+                    : ""
+                }
+                onClick={() =>
+                  setFilter("all")
+                }
+              >
+                All
+              </button>
+
+              <button
+                className={
+                  filter === "active"
+                    ? "filter-active"
+                    : ""
+                }
+                onClick={() =>
+                  setFilter(
+                    "active"
+                  )
+                }
+              >
+                Active
+              </button>
+
+              <button
+                className={
+                  filter ===
+                  "completed"
+                    ? "filter-active"
+                    : ""
+                }
+                onClick={() =>
+                  setFilter(
+                    "completed"
+                  )
+                }
+              >
+                Completed
+              </button>
+
+            </div>
+
+          </div>
+
+          {/* =========================
+              Error
+              ========================= */}
 
           {error && (
             <div className="error">
@@ -293,34 +514,53 @@ function Dashboard() {
             </div>
           )}
 
+          {/* =========================
+              Loading
+              ========================= */}
+
           {loading ? (
 
             <div className="loading">
               Loading todos...
             </div>
 
-          ) : todos.length === 0 ? (
+          ) : filteredTodos.length ===
+            0 ? (
+
+            /* =========================
+               Empty State
+               ========================= */
 
             <div className="empty-state">
 
               <h3>
-                No todos yet
+                No todos found
               </h3>
 
               <p>
-                Create your first
-                task above.
+                {search
+                  ? "Try a different search."
+                  : filter ===
+                    "active"
+                  ? "You have no active tasks."
+                  : filter ===
+                    "completed"
+                  ? "You have no completed tasks."
+                  : "Create your first task above."}
               </p>
 
             </div>
 
           ) : (
 
+            /* =========================
+               Todo List
+               ========================= */
+
             <div className="todo-list">
 
-              {todos.map(
+              {filteredTodos.map(
                 (todo) => (
-
                   <TodoItem
                     key={todo.id}
                     todo={todo}
@@ -334,7 +574,6 @@ function Dashboard() {
                       handleDelete
                     }
                   />
-
                 )
               )}
 
@@ -346,6 +585,35 @@ function Dashboard() {
 
       </main>
 
+      {/* =========================
+          Edit Modal
+          ========================= */}
+
+      <EditTodoModal
+        todo={editingTodo}
+        onClose={() =>
+          setEditingTodo(null)
+        }
+        onSave={
+          handleSaveEdit
+        }
+      />
+
+      {/* =========================
+          Delete Modal
+          ========================= */}
+
+      <DeleteTodoModal
+        todo={deletingTodo}
+        onClose={() =>
+          setDeletingTodo(null)
+        }
+        onConfirm={
+          handleConfirmDelete
+        }
+        loading={deleteLoading}
+      />
+        
     </div>
   );
 }

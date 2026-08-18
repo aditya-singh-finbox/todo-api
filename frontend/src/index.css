@@ -1,3 +1,7 @@
+/* =========================================
+   GLOBAL
+   ========================================= */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,8 +9,13 @@
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
   background: #f5f5f5;
+
   color: #222;
 }
 
@@ -14,372 +23,17 @@ button {
   cursor: pointer;
 }
 
-input {
+input,
+textarea {
   outline: none;
 }
 
-.auth-page {
-  min-height: 100vh;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* =========================================
+   AUTHENTICATION
+   ========================================= */
 
-  background: #f5f5f5;
-}
-
-.auth-card {
-  width: 400px;
-
-  background: white;
-
-  padding: 40px;
-
-  border-radius: 10px;
-
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-.auth-card h1 {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.auth-card h2 {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-
-  margin-bottom: 8px;
-
-  font-weight: bold;
-}
-
-.form-group input {
-  width: 100%;
-
-  padding: 12px;
-
-  border: 1px solid #ccc;
-
-  border-radius: 6px;
-
-  font-size: 16px;
-}
-
-.auth-card button {
-  width: 100%;
-
-  padding: 12px;
-
-  border: none;
-
-  border-radius: 6px;
-
-  background: #222;
-
-  color: white;
-
-  font-size: 16px;
-}
-
-.auth-card button:disabled {
-  opacity: 0.6;
-}
-
-.auth-card p {
-  margin-top: 20px;
-
-  text-align: center;
-}
-
-.error {
-  background: #ffe5e5;
-
-  color: #c00;
-
-  padding: 10px;
-
-  border-radius: 5px;
-
-  margin-bottom: 20px;
-}
-
-
-/* =========================
-   Navbar
-   ========================= */
-
-.navbar {
-  height: 70px;
-
-  background: white;
-
-  border-bottom: 1px solid #e5e5e5;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  padding: 0 40px;
-}
-
-.navbar-left h1 {
-  font-size: 24px;
-}
-
-.navbar-right {
-  display: flex;
-
-  align-items: center;
-
-  gap: 20px;
-}
-
-.logout-button {
-  width: auto !important;
-
-  padding: 8px 16px !important;
-
-  background: #222 !important;
-
-  color: white;
-}
-
-/* =========================
-   Dashboard
-   ========================= */
-
-.dashboard {
-  min-height: 100vh;
-
-  background: #f5f5f5;
-}
-
-.dashboard-content {
-  max-width: 900px;
-
-  margin: 0 auto;
-
-  padding: 40px 20px;
-}
-
-/* =========================
-   Todo Form
-   ========================= */
-
-.todo-form-card {
-  background: white;
-
-  padding: 30px;
-
-  border-radius: 10px;
-
-  box-shadow:
-    0 2px 10px
-    rgba(0, 0, 0, 0.06);
-
-  margin-bottom: 30px;
-}
-
-.todo-form-card h2 {
-  margin-bottom: 25px;
-}
-
-.todo-form-card textarea {
-  width: 100%;
-
-  padding: 12px;
-
-  border: 1px solid #ccc;
-
-  border-radius: 6px;
-
-  font-family: inherit;
-
-  font-size: 16px;
-
-  resize: vertical;
-}
-
-.todo-form-card button {
-  width: auto;
-
-  padding: 12px 25px;
-}
-
-/* =========================
-   Section Header
-   ========================= */
-
-.section-header {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  margin-bottom: 20px;
-}
-
-.section-header h2 {
-  font-size: 24px;
-}
-
-.section-header span {
-  color: #777;
-}
-
-/* =========================
-   Todo Item
-   ========================= */
-
-.todo-list {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 12px;
-}
-
-.todo-item {
-  background: white;
-
-  padding: 20px;
-
-  border-radius: 8px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 20px;
-
-  box-shadow:
-    0 2px 8px
-    rgba(0, 0, 0, 0.05);
-}
-
-.todo-main {
-  display: flex;
-
-  align-items: flex-start;
-
-  gap: 15px;
-
-  flex: 1;
-}
-
-.todo-main input[type="checkbox"] {
-  width: 20px;
-
-  height: 20px;
-
-  margin-top: 3px;
-}
-
-.todo-content h3 {
-  margin-bottom: 6px;
-}
-
-.todo-content p {
-  color: #666;
-
-  line-height: 1.5;
-}
-
-.todo-item.completed
-.todo-content h3 {
-  text-decoration: line-through;
-
-  color: #888;
-}
-
-.todo-item.completed
-.todo-content p {
-  text-decoration: line-through;
-
-  color: #aaa;
-}
-
-/* =========================
-   Todo Actions
-   ========================= */
-
-.todo-actions {
-  display: flex;
-
-  gap: 8px;
-}
-
-.todo-actions button {
-  width: auto;
-
-  padding: 7px 12px;
-
-  border: 1px solid #ccc;
-
-  background: white;
-
-  border-radius: 5px;
-}
-
-.todo-actions .delete-button {
-  color: #c00;
-
-  border-color: #e5aaaa;
-}
-
-/* =========================
-   Loading
-   ========================= */
-
-.loading {
-  text-align: center;
-
-  padding: 50px;
-
-  color: #777;
-}
-
-/* =========================
-   Empty State
-   ========================= */
-
-.empty-state {
-  background: white;
-
-  padding: 60px 20px;
-
-  text-align: center;
-
-  border-radius: 10px;
-}
-
-.empty-state h3 {
-  margin-bottom: 10px;
-}
-
-.empty-state p {
-  color: #777;
-}
-
-/* =========================
-   Authentication
-   ========================= */
-
+.auth-page,
 .auth-container {
   min-height: 100vh;
 
@@ -422,6 +76,23 @@ input {
   margin-bottom: 30px;
 }
 
+.auth-card p {
+  margin-top: 20px;
+
+  text-align: center;
+}
+
+.auth-link {
+  text-align: center;
+
+  margin-top: 20px;
+}
+
+
+/* =========================================
+   FORM
+   ========================================= */
+
 .form-group {
   margin-bottom: 20px;
 }
@@ -429,24 +100,65 @@ input {
 .form-group label {
   display: block;
 
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 
-  font-weight: 500;
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #333;
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea {
   width: 100%;
 
-  padding: 12px;
+  padding: 12px 14px;
 
   border: 1px solid #ccc;
 
-  border-radius: 6px;
+  border-radius: 7px;
 
-  font-size: 16px;
+  font-family: inherit;
+
+  font-size: 15px;
+
+  line-height: 1.5;
+
+  background: white;
+
+  color: #222;
 
   box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
+
+.form-group input {
+  height: 44px;
+}
+
+.form-group textarea {
+  min-height: 120px;
+
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #555;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================
+   AUTH BUTTON
+   ========================================= */
 
 .auth-card button {
   width: 100%;
@@ -472,11 +184,10 @@ input {
   cursor: not-allowed;
 }
 
-.auth-link {
-  text-align: center;
 
-  margin-top: 20px;
-}
+/* =========================================
+   ERROR
+   ========================================= */
 
 .error {
   background: #ffe5e5;
@@ -488,76 +199,30 @@ input {
   border-radius: 6px;
 
   margin-bottom: 20px;
+
+  line-height: 1.4;
 }
 
-.dashboard {
-  min-height: 100vh;
-  background: #f5f5f5;
-}
 
-.dashboard-content {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
-.dashboard-content > h2 {
-  margin-bottom: 25px;
-}
-
-.todo-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.todo-item {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-
-  box-shadow:
-    0 2px 8px
-    rgba(0, 0, 0, 0.06);
-}
-
-.todo-item h3 {
-  margin-bottom: 8px;
-}
-
-.todo-item p {
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.todo-item small {
-  color: #777;
-}
-
-.empty-state {
-  background: white;
-  padding: 50px 20px;
-  text-align: center;
-  border-radius: 10px;
-}
-
-.empty-state p {
-  color: #777;
-  margin-top: 10px;
-}
+/* =========================================
+   NAVBAR
+   ========================================= */
 
 .navbar {
   height: 70px;
+
   background: white;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 40px;
 
   border-bottom:
     1px solid #e5e5e5;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 40px;
 }
 
 .navbar-left h1 {
@@ -566,16 +231,55 @@ input {
 
 .navbar-right {
   display: flex;
+
   align-items: center;
+
   gap: 20px;
 }
 
 .logout-button {
   width: auto !important;
+
   padding: 8px 16px !important;
+
   background: #222 !important;
+
   color: white;
+
+  border: none;
+
+  border-radius: 6px;
+
+  font-size: 14px;
 }
+
+.logout-button:hover {
+  background: #444 !important;
+}
+
+
+/* =========================================
+   DASHBOARD
+   ========================================= */
+
+.dashboard {
+  min-height: 100vh;
+
+  background: #f5f5f5;
+}
+
+.dashboard-content {
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  padding: 40px 20px;
+}
+
+
+/* =========================================
+   TODO FORM
+   ========================================= */
 
 .todo-form-card {
   background: white;
@@ -598,19 +302,31 @@ input {
 .todo-form-card textarea {
   width: 100%;
 
-  padding: 12px;
+  min-height: 120px;
+
+  padding: 12px 14px;
 
   border: 1px solid #ccc;
 
-  border-radius: 6px;
+  border-radius: 7px;
 
   font-family: inherit;
 
-  font-size: 16px;
+  font-size: 15px;
+
+  line-height: 1.5;
 
   resize: vertical;
 
   box-sizing: border-box;
+}
+
+.todo-form-card textarea:focus {
+  border-color: #555;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(0, 0, 0, 0.08);
 }
 
 .todo-form-card button {
@@ -631,27 +347,180 @@ input {
   font-size: 16px;
 }
 
+.todo-form-card button:hover {
+  background: #444;
+}
+
 .todo-form-card button:disabled {
   opacity: 0.6;
 
   cursor: not-allowed;
 }
 
+
+/* =========================================
+   STATISTICS
+   ========================================= */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 15px;
+
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 2px 8px
+    rgba(0, 0, 0, 0.05);
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.stat-card span {
+  color: #777;
+
+  font-size: 14px;
+}
+
+.stat-card strong {
+  font-size: 28px;
+}
+
+
+/* =========================================
+   SECTION HEADER
+   ========================================= */
+
 .section-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  font-size: 24px;
+}
+
+.section-header span {
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   SEARCH + FILTERS
+   ========================================= */
+
+.todo-controls {
   display: flex;
 
   justify-content: space-between;
 
   align-items: center;
 
+  gap: 15px;
+
   margin-bottom: 20px;
 }
 
-.section-header span {
-  color: #777;
+.search-input {
+  flex: 1;
+
+  padding: 11px 14px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 6px;
+
+  font-size: 15px;
+
+  box-sizing: border-box;
+
+  background: white;
+}
+
+.search-input:focus {
+  border-color: #555;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(0, 0, 0, 0.08);
+}
+
+.filters {
+  display: flex;
+
+  gap: 8px;
+}
+
+.filters button {
+  width: auto;
+
+  padding: 9px 14px;
+
+  border: 1px solid #ccc;
+
+  background: white;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+}
+
+.filters button:hover {
+  background: #f5f5f5;
+}
+
+.filters .filter-active {
+  background: #222;
+
+  color: white;
+
+  border-color: #222;
+}
+
+
+/* =========================================
+   TODO LIST
+   ========================================= */
+
+.todo-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
 }
 
 .todo-item {
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 8px;
+
   display: flex;
 
   align-items: center;
@@ -660,15 +529,19 @@ input {
 
   gap: 20px;
 
-  background: white;
-
-  padding: 20px;
-
-  border-radius: 8px;
-
   box-shadow:
     0 2px 8px
     rgba(0, 0, 0, 0.05);
+
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.todo-item:hover {
+  box-shadow:
+    0 4px 14px
+    rgba(0, 0, 0, 0.08);
 }
 
 .todo-main {
@@ -679,6 +552,8 @@ input {
   gap: 15px;
 
   flex: 1;
+
+  min-width: 0;
 }
 
 .todo-main input[type="checkbox"] {
@@ -689,16 +564,28 @@ input {
   margin-top: 3px;
 
   cursor: pointer;
+
+  flex-shrink: 0;
+}
+
+.todo-content {
+  min-width: 0;
 }
 
 .todo-content h3 {
   margin-bottom: 6px;
+
+  word-break: break-word;
 }
 
 .todo-content p {
   color: #666;
 
   margin-bottom: 8px;
+
+  line-height: 1.5;
+
+  word-break: break-word;
 }
 
 .todo-content small {
@@ -721,10 +608,17 @@ input {
   color: #aaa;
 }
 
+
+/* =========================================
+   TODO ACTIONS
+   ========================================= */
+
 .todo-actions {
   display: flex;
 
   gap: 8px;
+
+  flex-shrink: 0;
 }
 
 .todo-actions button {
@@ -739,15 +633,411 @@ input {
   background: white;
 
   cursor: pointer;
+
+  font-size: 14px;
 }
 
 .todo-actions button:hover {
   background: #f5f5f5;
 }
 
-.todo-actions
-.delete-button {
+.todo-actions .delete-button {
   color: #c00;
 
   border-color: #e0aaaa;
+}
+
+.todo-actions
+.delete-button:hover {
+  background: #fff0f0;
+}
+
+
+/* =========================================
+   LOADING
+   ========================================= */
+
+.loading {
+  text-align: center;
+
+  padding: 50px;
+
+  color: #777;
+}
+
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+.empty-state {
+  background: white;
+
+  padding: 60px 20px;
+
+  text-align: center;
+
+  border-radius: 10px;
+}
+
+.empty-state h3 {
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  color: #777;
+
+  margin-top: 10px;
+}
+
+
+/* =========================================
+   MODAL OVERLAY
+   ========================================= */
+
+.modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    rgba(0, 0, 0, 0.45);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  z-index: 1000;
+}
+
+
+/* =========================================
+   MODAL
+   ========================================= */
+
+.modal {
+  width: 100%;
+
+  max-width: 540px;
+
+  background: white;
+
+  border-radius: 12px;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 10px 40px
+    rgba(0, 0, 0, 0.2);
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+}
+
+
+/* =========================================
+   MODAL HEADER
+   ========================================= */
+
+.modal-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 28px;
+
+  padding-bottom: 15px;
+
+  border-bottom:
+    1px solid #eee;
+}
+
+.modal-header h2 {
+  margin: 0;
+
+  font-size: 22px;
+}
+
+.modal-close {
+  width: 35px !important;
+
+  height: 35px;
+
+  padding: 0 !important;
+
+  border: none !important;
+
+  background: transparent !important;
+
+  color: #666;
+
+  font-size: 28px;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  border-radius: 6px;
+}
+
+.modal-close:hover {
+  background: #f5f5f5 !important;
+
+  color: #111;
+}
+
+
+/* =========================================
+   MODAL FORM
+   ========================================= */
+
+.modal .form-group {
+  margin-bottom: 20px;
+}
+
+.modal .form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #333;
+}
+
+.modal .form-group input,
+.modal .form-group textarea {
+  display: block;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 7px;
+
+  background: #fff;
+
+  color: #222;
+
+  font-family: inherit;
+
+  font-size: 15px;
+
+  line-height: 1.5;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.modal .form-group input {
+  height: 44px;
+}
+
+.modal .form-group textarea {
+  min-height: 130px;
+
+  resize: vertical;
+}
+
+.modal .form-group input:focus,
+.modal .form-group textarea:focus {
+  border-color: #555;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(0, 0, 0, 0.08);
+}
+
+.modal .form-group input:disabled,
+.modal .form-group textarea:disabled {
+  background: #f5f5f5;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   MODAL ACTIONS
+   ========================================= */
+
+.modal-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 25px;
+}
+
+.modal-actions button {
+  width: auto;
+
+  padding: 10px 18px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+}
+
+.primary-button {
+  background: #222;
+
+  color: white;
+
+  border: 1px solid #222;
+}
+
+.primary-button:hover {
+  background: #444;
+}
+
+.secondary-button {
+  background: white;
+
+  color: #333;
+
+  border: 1px solid #ccc;
+}
+
+.secondary-button:hover {
+  background: #f5f5f5;
+}
+
+.delete-confirm-button {
+  background: #c62828;
+
+  color: white;
+
+  border: 1px solid #c62828;
+}
+
+.delete-confirm-button:hover {
+  background: #a91f1f;
+}
+
+.modal-actions button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   DELETE MODAL
+   ========================================= */
+
+.delete-content {
+  line-height: 1.6;
+}
+
+.delete-content strong {
+  display: block;
+
+  margin: 15px 0;
+
+  font-size: 18px;
+
+  word-break: break-word;
+}
+
+.warning-text {
+  color: #c62828;
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 700px) {
+
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .navbar-right {
+    gap: 10px;
+  }
+
+  .navbar-right span {
+    display: none;
+  }
+
+  .dashboard-content {
+    padding: 25px 15px;
+  }
+
+  .stats-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .todo-controls {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .filters {
+    width: 100%;
+  }
+
+  .filters button {
+    flex: 1;
+  }
+
+  .todo-item {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .todo-actions {
+    width: 100%;
+  }
+
+  .todo-actions button {
+    flex: 1;
+  }
+
+  .todo-form-card {
+    padding: 20px;
+  }
+
+  .modal {
+    padding: 22px;
+
+    max-width: 100%;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
 }
