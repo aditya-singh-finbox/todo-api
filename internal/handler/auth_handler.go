@@ -100,7 +100,7 @@ func (h *AuthHandler) Refresh(c *gin.Context) {
 		return
 	}
 
-	accessToken, err :=
+	accessToken, refreshToken, err :=
 		h.authService.Refresh(req.RefreshToken)
 
 	if err != nil {
@@ -113,7 +113,8 @@ func (h *AuthHandler) Refresh(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"access_token": accessToken,
+		"access_token":  accessToken,
+		"refresh_token": refreshToken,
 	})
 }
 

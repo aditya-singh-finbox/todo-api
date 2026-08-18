@@ -66,23 +66,56 @@ func (s *AuthService) Login(
 
 func (s *AuthService) Refresh(
 	refreshToken string,
-) (string, error) {
+) (string, string, error) {
+
 	token, err := s.refreshTokenRepo.GetByToken(refreshToken)
 
 	if err != nil {
-		return "", errors.New("invalid refresh token")
-	}
-	if time.Now().After(token.ExpiresAt) {
-		_ = s.refreshTokenRepo.Delete(refreshToken)
-		return "", errors.New("refresh token expired")
+		return "", "", errors.New("invalid refresh token")
 	}
 
+	if time.Now().After(token.ExpiresAt) {
+
+		_ = s.refreshTokenRepo.Delete(refreshToken)
+
+		return "", "", errors.New("refresh token expired")
+	}
+
+	// Generate new access token
 	accessToken, err := s.jwtService.GenerateToken(token.UserID)
 
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
-	return accessToken, nil
+
+	// Generate new refresh token
+	newRefreshToken, err := auth.GenerateRefreshToken()
+
+	if err != nil {
+		return "", "", err
+	}
+
+	// Delete old refresh token
+	err = s.refreshTokenRepo.Delete(refreshToken)
+
+	if err != nil {
+		return "", "", err
+	}
+
+	// Store new refresh token
+	newRefreshTokenModel := &model.RefreshToken{
+		Token:     newRefreshToken,
+		UserID:    token.UserID,
+		ExpiresAt: time.Now().Add(7 * 24 * time.Hour),
+	}
+
+	err = s.refreshTokenRepo.Create(newRefreshTokenModel)
+
+	if err != nil {
+		return "", "", err
+	}
+
+	return accessToken, newRefreshToken, nil
 }
 
 func (s *AuthService) Logout(refreshToken string) error {
